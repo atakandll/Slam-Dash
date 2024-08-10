@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Enums;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -18,9 +19,12 @@ public class PlayerMovement : MonoBehaviour
 
    public void Move(Vector2Int direction)
    {
-      //todo : Sanitize input
-      MoveOnceRecursive(direction);
-      gameManager.TurnTaken();
+      if (gameManager.GetGameState() == GameState.Playing)
+      {
+         MoveOnceRecursive(direction);
+         gameManager.TurnTaken();
+      }
+      
    }
    private void MoveOnceRecursive(Vector2Int direction, int tooManyMoves = 0)
    {
