@@ -1,18 +1,28 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
    [SerializeField] private LayerMask environmentLayerMask;
    [SerializeField] private LayerMask interactableLayerMask;
-   [SerializeField] private GameObject _dustTrailPrefab;
-   public  void Move(Vector2Int direction)
+   [SerializeField] private GameObject dustTrailPrefab;
+   private GameManager gameManager;
+
+   private void Awake()
+   {
+      gameManager = FindObjectOfType<GameManager>();
+   }
+
+   public void Move(Vector2Int direction)
    {
       //todo : Sanitize input
-      worldPoint(direction);
+      MoveOnceRecursive(direction);
+      gameManager.TurnTaken();
    }
-   private void worldPoint(Vector2Int direction, int tooManyMoves = 0)
+   private void MoveOnceRecursive(Vector2Int direction, int tooManyMoves = 0)
    {
       //bail
       if (tooManyMoves > 1000)
@@ -21,7 +31,6 @@ public class PlayerMovement : MonoBehaviour
          return;
       }
       
-      //
       Vector3 nextPosition = transform.position + new Vector3(direction.x, direction.y, 0);
       if (IsNoWallHere(nextPosition))
       {
@@ -30,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
          transform.position = nextPosition;
           CheckForInteractable(transform.position);
 
-         worldPoint(direction, tooManyMoves + 1); // Recursive call
+         MoveOnceRecursive(direction, tooManyMoves + 1); // Recursive call
       }
    }
 
@@ -57,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
 
    private void SpawnDustTrail(Vector3 worldPoint)
    {
-      Instantiate(_dustTrailPrefab, worldPoint, Quaternion.identity);
+      Instantiate(dustTrailPrefab, worldPoint, Quaternion.identity);
       
    }
 
