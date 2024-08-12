@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Runtime.Controllers
 {
-   public class PlayerMovement : MonoBehaviour
+   public class PlayerMovementController : MonoBehaviour
    {
       [SerializeField] private LayerMask environmentLayerMask;
       [SerializeField] private LayerMask interactableLayerMask;
@@ -48,16 +48,16 @@ namespace Runtime.Controllers
 
       private void  CheckForInteractable(Vector3 worldPoint)
       {
-         Collider2D overlap = Physics2D.OverlapPoint((Vector2)worldPoint, interactableLayerMask);
+         Collider2D overlap = Physics2D.OverlapPoint(worldPoint, interactableLayerMask);
 
          if (overlap != null)
          {
             // Interact with pickup
-            InteractableManager ınteractableManager = overlap.GetComponent<InteractableManager>();
+            InteractableManager interactableManager = overlap.GetComponent<InteractableManager>();
 
-            if (ınteractableManager != null)
+            if (interactableManager != null)
             {
-               ınteractableManager.Interact();
+               interactableManager.Interact();
             }
         
 
@@ -75,7 +75,7 @@ namespace Runtime.Controllers
 
       private bool IsNoWallHere(Vector3 worldPoint)
       {
-         Collider2D wall = Physics2D.OverlapPoint((Vector2)worldPoint, environmentLayerMask);
+         Collider2D wall = Physics2D.OverlapPoint(worldPoint, environmentLayerMask);
          return wall == null;
       }
    }
