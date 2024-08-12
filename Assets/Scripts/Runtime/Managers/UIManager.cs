@@ -17,14 +17,11 @@ namespace Runtime.Managers
             _gameManager = FindObjectOfType<GameManager>();
         }
 
-        private void Start()
-        {
-            UpdateDisplayedState();
-        }
-
+        private void Start() => UpdateDisplayedState();
+       
         private void Update()
         {
-            if(_gameManager.GetGameState() != currentlyDisplayedState) 
+            if(currentlyDisplayedState != _gameManager.GetGameState()) 
                 UpdateDisplayedState();
             
         }

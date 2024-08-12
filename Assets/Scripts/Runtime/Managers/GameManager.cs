@@ -1,15 +1,36 @@
-﻿using Runtime.Enums;
+﻿using Runtime.Data;
+using Runtime.Enums;
 using UnityEngine;
 
 namespace Runtime.Managers
 {
         public class GameManager : MonoBehaviour
         {
+                [SerializeField] private CD_LevelList levelList;
                 [SerializeField] private int lives;
                 private int _turnCount = 0;
                 private GameState gameState;
 
                 private void Start() => gameState = GameState.Playing;
+                private void Update()
+                {
+                        // for testing purposes
+            
+                        if (Input.GetKeyDown(KeyCode.R))
+                        {
+                                levelList.RestartLevel();
+                        }
+
+                        if (Input.GetKeyDown(KeyCode.N))
+                        {
+                                levelList.GoNextLevel();
+                        }
+                }
+
+                public void GetExtraLife()
+                {
+                        _turnCount--;
+                }
                 public void TurnTaken()
                 {
                         _turnCount++;
@@ -20,7 +41,7 @@ namespace Runtime.Managers
                         }
                 }
 
-                public int GetLives() => lives - _turnCount;
+                public int GetLivesLeft() => lives - _turnCount;
              
                 public GameState GetGameState() => gameState;
                 public void Win() =>  gameState = GameState.Won;

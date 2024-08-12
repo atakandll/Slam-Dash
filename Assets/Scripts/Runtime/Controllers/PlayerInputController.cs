@@ -2,32 +2,32 @@
 
 namespace Runtime.Controllers
 {
-        public class PlayerInput : MonoBehaviour
+        public class PlayerInputController : MonoBehaviour
         {
-                private PlayerMovement _playerMovement;
+                private PlayerMovementController _playerMovementController;
         
                 private void Awake()
                 { 
-                        _playerMovement = GetComponent<PlayerMovement>();
+                        _playerMovementController = GetComponent<PlayerMovementController>();
                 }
 
                 private void Update()
                 {
                         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
                         {
-                                _playerMovement.Move(Vector2Int.up);
+                                _playerMovementController.Move(Vector2Int.up);
                         }
                         else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
                         {
-                                _playerMovement.Move(Vector2Int.down);
+                                _playerMovementController.Move(Vector2Int.down);
                         }
                         else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
                         {
-                                _playerMovement.Move(Vector2Int.left);
+                                _playerMovementController.Move(Vector2Int.left);
                         }
                         else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
                         {
-                                _playerMovement.Move(Vector2Int.right);
+                                _playerMovementController.Move(Vector2Int.right);
                         }
                 }
         }
