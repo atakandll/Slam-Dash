@@ -626,6 +626,7 @@ GameObject:
   - component: {fileID: 534242882}
   - component: {fileID: 534242885}
   - component: {fileID: 534242884}
+  - component: {fileID: 534242886}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -718,7 +719,6 @@ MonoBehaviour:
   interactableLayerMask:
     serializedVersion: 2
     m_Bits: 128
-  dustTrailPrefab: {fileID: 2839176662553372690, guid: 6e083f08b842b7745b43d7e4ad72656b, type: 3}
 --- !u!114 &534242885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -731,6 +731,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b98df211f3c49f4876a8f6c65c36d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &534242886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534242881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89e1a88e12bc43739cb3d737ac910431, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dustTrailPrefab: {fileID: 2839176662553372690, guid: 6e083f08b842b7745b43d7e4ad72656b, type: 3}
 --- !u!1 &668382093
 GameObject:
   m_ObjectHideFlags: 0

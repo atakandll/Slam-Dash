@@ -8,45 +8,57 @@ namespace Runtime.Controllers
    {
       [SerializeField] private LayerMask environmentLayerMask;
       [SerializeField] private LayerMask interactableLayerMask;
-      [SerializeField] private GameObject dustTrailPrefab;
-      private GameManager gameManager;
+      private PlayerEffectController _playerEffectController;
+      private GameManager _gameManager;
 
       private void Awake()
       {
-         gameManager = FindObjectOfType<GameManager>();
+         _gameManager = FindObjectOfType<GameManager>();
+         _playerEffectController = GetComponent<PlayerEffectController>();
       }
 
       public void Move(Vector2Int direction)
       {
-         if (gameManager.GetGameState() == GameState.Playing)
+         if (_gameManager.GetGameState() == GameState.Playing)
          {
-            MoveOnceRecursive(direction);
-            gameManager.TurnTaken();
+            int count = MoveOnceRecursive(direction);
+
+            if (count > 0)
+            {
+               _playerEffectController.HitWall();
+               _gameManager.TurnTaken();
+
+            }
+
          }
       
       }
-      private void MoveOnceRecursive(Vector2Int direction, int tooManyMoves = 0)
+      private int MoveOnceRecursive(Vector2Int direction, int moveCount = 0)
       {
          //bail
-         if (tooManyMoves > 1000)
+         if (moveCount > 1000)
          {
             Debug.Log("Too many moves");
-            return;
+            return moveCount;
          }
       
          Vector3 nextPosition = transform.position + new Vector3(direction.x, direction.y, 0);
+         
          if (IsNoWallHere(nextPosition))
          {
             //spawn dust trail
-            SpawnDustTrail(transform.position);
+            _playerEffectController.DustTrail(transform.position);
             transform.position = nextPosition;
             CheckForInteractable(transform.position);
 
-            MoveOnceRecursive(direction, tooManyMoves + 1); // Recursive call
+            return MoveOnceRecursive(direction, moveCount + 1); // Recursive call
+            
          }
+
+         return moveCount;
       }
 
-      private void  CheckForInteractable(Vector3 worldPoint)
+      private void CheckForInteractable(Vector3 worldPoint)
       {
          Collider2D overlap = Physics2D.OverlapPoint(worldPoint, interactableLayerMask);
 
@@ -59,18 +71,7 @@ namespace Runtime.Controllers
             {
                interactableManager.Interact();
             }
-        
-
          }
-      
-      
-
-      }
-
-      private void SpawnDustTrail(Vector3 worldPoint)
-      {
-         Instantiate(dustTrailPrefab, worldPoint, Quaternion.identity);
-      
       }
 
       private bool IsNoWallHere(Vector3 worldPoint)
