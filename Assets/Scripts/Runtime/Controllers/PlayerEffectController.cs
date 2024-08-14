@@ -6,20 +6,20 @@ namespace Runtime.Controllers
     public class PlayerEffectController : MonoBehaviour
     {
         [SerializeField] private GameObject dustTrailPrefab;
-        private List<GameObject> _dustParticle = new List<GameObject>();
+        private readonly List<GameObject> _dustParticle = new List<GameObject>();
         public void DustTrail(Vector3 worldPoint)
         {
-            foreach (GameObject g in _dustParticle)
+            foreach (GameObject dust in _dustParticle)
             {
-                if (!g.activeInHierarchy)
+                if (!dust.activeInHierarchy)
                 {
-                    g.transform.position = worldPoint;
-                    g.SetActive(true);
+                    dust.transform.position = worldPoint;
+                    dust.SetActive(true);
                     return;
                 }
                     
             }
-            GameObject newDust = Instantiate(dustTrailPrefab, worldPoint, Quaternion.identity);
+            var newDust = Instantiate(dustTrailPrefab, worldPoint, Quaternion.identity);
             _dustParticle.Add(newDust);
       
         }
