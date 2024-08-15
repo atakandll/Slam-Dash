@@ -1,4 +1,5 @@
-﻿using Runtime.Data;
+﻿using System;
+using Runtime.Data;
 using Runtime.Enums;
 using UnityEngine;
 
@@ -10,6 +11,11 @@ namespace Runtime.Managers
                 [SerializeField] private int lives;
                 private int _turnCount = 0;
                 private GameState gameState;
+
+                private void Awake()
+                {
+                        Application.targetFrameRate = 60;
+                }
 
                 private void Start() => gameState = GameState.Playing;
                 private void Update()
