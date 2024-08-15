@@ -25,7 +25,7 @@ namespace Runtime.Controllers
 
             if (count > 0)
             {
-               _playerEffectController.HitWall();
+               _playerEffectController.HitWall(direction);
                _gameManager.TurnTaken();
 
             }

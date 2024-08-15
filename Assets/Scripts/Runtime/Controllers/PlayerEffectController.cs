@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Cinemachine;
 using Runtime.Enums;
 using Runtime.Managers;
 using UnityEngine;
@@ -12,11 +13,13 @@ namespace Runtime.Controllers
         private readonly List<GameObject> _dustParticle = new List<GameObject>();
         private Animator _animator;
         private GameManager _gameManager;
+        private CinemachineImpulseSource _impulseSource;
 
         private void Awake()
         {
             _animator = GetComponent<Animator>();
             _gameManager = FindObjectOfType<GameManager>();
+            _impulseSource = GetComponent<CinemachineImpulseSource>();
 
         }
 
@@ -49,8 +52,10 @@ namespace Runtime.Controllers
       
         }
 
-        public void HitWall()
+        public void HitWall(Vector2Int impulseDirection)
         {
+            Vector3 velocity = new Vector3(impulseDirection.x, impulseDirection.y, 0);
+            _impulseSource.GenerateImpulseWithVelocity(velocity);
             _animator.SetTrigger("hitWall");
             // Play sound
             // flashing
