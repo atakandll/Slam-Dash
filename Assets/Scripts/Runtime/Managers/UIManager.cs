@@ -9,43 +9,34 @@ namespace Runtime.Managers
     {
         [SerializeField] private GameObject losePanel;
         [SerializeField] private GameObject winPanel;
-        private GameManager _gameManager;
-        private GameState currentlyDisplayedState;
-
-        private void Awake()
+        
+        private void OnEnable()
         {
-            _gameManager = FindObjectOfType<GameManager>();
+            GameManager.OnGameStateChange += UpdateDisplayedState;
         }
 
-        private void Start() => UpdateDisplayedState();
-       
-        private void Update()
+        private void OnDisable()
         {
-            if(currentlyDisplayedState != _gameManager.GetGameState()) 
-                UpdateDisplayedState();
-            
+            GameManager.OnGameStateChange -= UpdateDisplayedState;
         }
 
-        private void UpdateDisplayedState()
+        private void UpdateDisplayedState(GameState newState)
         {
-            if (_gameManager.GetGameState() == GameState.Lost)
+            if (newState == GameState.Lost)
             {
                 losePanel.SetActive(true);
                 winPanel.SetActive(false);
-                currentlyDisplayedState = GameState.Lost;
             }
-            else if (_gameManager.GetGameState() == GameState.Won)
+            else if (newState == GameState.Won)
             {
                 winPanel.SetActive(true);
                 losePanel.SetActive(false);
-                currentlyDisplayedState = GameState.Won;
             }
-            else if (_gameManager.GetGameState() == GameState.Playing)
+            else if (newState == GameState.Playing)
             {
                 losePanel.SetActive(false);
                 winPanel.SetActive(false);
-                currentlyDisplayedState = GameState.Playing;
-                
+
             }
         }
     }
