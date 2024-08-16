@@ -12,29 +12,38 @@ namespace Runtime.Controllers
         [SerializeField] private GameObject dustTrailPrefab;
         private readonly List<GameObject> _dustParticle = new List<GameObject>();
         private Animator _animator;
-        private GameManager _gameManager;
         private CinemachineImpulseSource _impulseSource;
 
         private void Awake()
         {
             _animator = GetComponent<Animator>();
-            _gameManager = FindObjectOfType<GameManager>();
             _impulseSource = GetComponent<CinemachineImpulseSource>();
 
         }
 
-        private void Update()
+        private void OnEnable()
         {
-            if(_gameManager.GetGameState() == GameState.Lost)
+            GameManager.OnGameStateChange += UpdateDisplayedState;
+        }
+
+        private void UpdateDisplayedState(GameState newState) 
+        {
+            if (newState == GameState.Lost)
             {
                 _animator.SetBool("dead",true);
             }
-            else if(_gameManager.GetGameState() == GameState.Won)
+            else if (newState == GameState.Won)
             {
                 _animator.SetBool("atGoal",true);
             }
+            
         }
-        
+
+        private void OnDisable()
+        {
+            GameManager.OnGameStateChange -= UpdateDisplayedState;
+        }
+
         public void DustTrail(Vector3 worldPoint)
         {
             foreach (GameObject dust in _dustParticle)

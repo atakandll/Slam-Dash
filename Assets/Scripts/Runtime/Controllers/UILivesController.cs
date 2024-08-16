@@ -6,13 +6,13 @@ namespace Runtime.Controllers
 {
     public class UILivesController : MonoBehaviour
     {
-        private GameManager _gameManager;
+        
         [SerializeField] private GameObject lifeIndicator;
         
-        private void Awake() =>  _gameManager = FindObjectOfType<GameManager>();
+       
         private void Update()
         {
-            if (transform.childCount != _gameManager.GetLivesLeft())
+            if (transform.childCount != GameManager.Instance.GetLivesLeft())
                 RefreshChildren();
           
         }
@@ -27,7 +27,7 @@ namespace Runtime.Controllers
             
             //add the right number back
 
-            for (int i = 0; i < _gameManager.GetLivesLeft(); i++)
+            for (int i = 0; i < GameManager.Instance.GetLivesLeft(); i++)
             {
                 Instantiate(lifeIndicator, transform);
             }

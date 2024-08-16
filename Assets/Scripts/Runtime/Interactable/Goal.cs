@@ -7,11 +7,11 @@ namespace Runtime.Interactable
     public class Goal : MonoBehaviour, IInteractable
     {
         private GameManager _gameManager;
-        private void Awake() => _gameManager = FindObjectOfType<GameManager>();
-
+        
         public void Interact()
         {
-            _gameManager.Win();
+            GameManager.Instance.Win();
         }
     }
+    
 }

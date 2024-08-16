@@ -7,15 +7,10 @@ namespace Runtime.Interactable
         public class Pickup : MonoBehaviour, IInteractable
         {
                 private GameManager _gameManager;
-
-                private void Awake()
-                {
-                        _gameManager = FindObjectOfType<GameManager>();
-                }
-
+                
                 public void Interact()
                 {
-                        _gameManager.GetExtraLife();
+                        GameManager.Instance.GetExtraLife();
                         Destroy(gameObject);
                 }
         }

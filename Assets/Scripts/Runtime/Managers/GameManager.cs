@@ -7,18 +7,41 @@ namespace Runtime.Managers
 {
         public class GameManager : MonoBehaviour
         {
+                #region Singleton
+
+                private static GameManager _instance;
+                public static GameManager Instance
+                {
+                        get
+                        {
+                                if (_instance == null)
+                                {
+                                        _instance = FindObjectOfType<GameManager>();
+                                        if (_instance == null)
+                                        {
+                                                GameObject obj = new GameObject();
+                                                _instance = obj.AddComponent<GameManager>();
+                                        }
+                                }
+                                return _instance;
+               
+                        }
+                }
+                private void Awake()
+                {
+                        Application.targetFrameRate = 60;
+
+                        _instance = this as GameManager;
+                }
+
+                #endregion
+                
                 public static Action<GameState> OnGameStateChange;
                 [SerializeField] private CD_LevelList levelList;
                 [SerializeField] private int lives;
                 private int _turnCount = 0;
                 private GameState gameState;
-
-                private void Awake()
-                {
-                        Application.targetFrameRate = 60;
-                }
                 
-
                 private void Start()
                 {
                         ChangeGameState(GameState.Playing);
@@ -74,7 +97,6 @@ namespace Runtime.Managers
                         if (gameState != GameState.Won)
                         {
                                 ChangeGameState(GameState.Lost);
-                                Debug.Log("Game Over");
                         
                         } 
                 } 

@@ -10,24 +10,18 @@ namespace Runtime.Controllers
       [SerializeField] private LayerMask environmentLayerMask;
       [SerializeField] private LayerMask interactableLayerMask;
       private PlayerEffectController _playerEffectController;
-      private GameManager _gameManager;
 
-      private void Awake()
-      {
-         _gameManager = FindObjectOfType<GameManager>();
-         _playerEffectController = GetComponent<PlayerEffectController>();
-      }
-
+      private void Awake() => _playerEffectController = GetComponent<PlayerEffectController>();
       public void Move(Vector2Int direction)
       {
-         if (_gameManager.GetGameState() == GameState.Playing)
+         if (GameManager.Instance.GetGameState() == GameState.Playing)
          {
             int count = MoveOnceRecursive(direction);
 
             if (count > 0)
             {
                _playerEffectController.HitWall(direction);
-               _gameManager.TurnTaken();
+               GameManager.Instance.TurnTaken();
 
             }
 
