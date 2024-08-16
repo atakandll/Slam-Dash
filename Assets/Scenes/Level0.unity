@@ -1423,6 +1423,10 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 534242883}
+    - target: {fileID: 5877896642311499543, guid: fba0c2cc25560614895acd9a41b7fa3f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.2634096
+      objectReference: {fileID: 0}
     - target: {fileID: 8270799951087662977, guid: fba0c2cc25560614895acd9a41b7fa3f, type: 3}
       propertyPath: m_RootOrder
       value: 0
