@@ -1,9 +1,10 @@
-﻿using Runtime.Managers;
+﻿using Runtime.Interfaces;
+using Runtime.Managers;
 using UnityEngine;
 
 namespace Runtime.Interactable
 {
-        public class Pickup : MonoBehaviour
+        public class Pickup : MonoBehaviour, IInteractable
         {
                 private GameManager _gameManager;
 
@@ -12,7 +13,7 @@ namespace Runtime.Interactable
                         _gameManager = FindObjectOfType<GameManager>();
                 }
 
-                public void PickUp()
+                public void Interact()
                 {
                         _gameManager.GetExtraLife();
                         Destroy(gameObject);

@@ -1,4 +1,5 @@
 using Runtime.Enums;
+using Runtime.Interfaces;
 using Runtime.Managers;
 using UnityEngine;
 
@@ -65,12 +66,8 @@ namespace Runtime.Controllers
          if (overlap != null)
          {
             // Interact with pickup
-            InteractableManager interactableManager = overlap.GetComponent<InteractableManager>();
-
-            if (interactableManager != null)
-            {
-               interactableManager.Interact();
-            }
+            var interactable = overlap.GetComponent<IInteractable>();
+            interactable?.Interact();
          }
       }
 
