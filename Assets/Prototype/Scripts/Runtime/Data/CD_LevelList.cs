@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace Prototype.Scripts.Runtime.Data
 {
-    [CreateAssetMenu(fileName = "CD_LevelList", menuName = "Slam Dash/Data/CD_LevelList", order = 0)]
+    [CreateAssetMenu(fileName = "CD_LevelList", menuName = "Prototype/Data/CD_LevelList", order = 0)]
     public class CD_LevelList : ScriptableObject
     {
         public int CurrentLevel;

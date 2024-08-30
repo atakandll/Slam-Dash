@@ -10,20 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Levels
+  m_Name: Packed Assets
   m_EditorClassIdentifier: 
-  m_GroupName: Levels
+  m_GroupName: Packed Assets
   m_Data:
     m_SerializedData: []
-  m_GUID: 33b0ffcea2640de4caee7e6db4b70eca
-  m_SerializeEntries:
-  - m_GUID: 19d896fe7cb1ef942b901d128b0de9ce
-    m_Address: Prefabs/LevelPrefabs/Level 0
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+  m_GUID: 41feb314613834044820ad7b7be8041d
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cf754fca1a3689443b12582baec7024a, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: e1e2118b5b71a19498c147857d6a9695, type: 2}
-    - {fileID: 11400000, guid: 587d2bc93dea12e4ea40445752929416, type: 2}
+    - {fileID: 11400000, guid: 97d0c510919ee9c449293e16a7b07a19, type: 2}
+    - {fileID: 11400000, guid: 3e83c9ffe83545647a09f8d1ffe4085e, type: 2}
