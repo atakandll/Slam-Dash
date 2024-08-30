@@ -16,9 +16,6 @@ namespace Runtime.Commands.Level
             Object.Destroy(_levelManager.levelHolder.transform.GetChild(0).gameObject);
         }
 
-        public void Undo()
-        {
-           
-        }
+        
     }
 }

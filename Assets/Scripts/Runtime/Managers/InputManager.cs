@@ -1,6 +1,11 @@
-﻿using Runtime.Custom;
+﻿using System;
+using Runtime.Commands.Movement;
+using Runtime.Custom;
 using Runtime.Data.UnityObjects;
+using Runtime.Data.ValueObjects;
+using Runtime.Interface;
 using Runtime.Signals;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -14,96 +19,105 @@ namespace Runtime.Managers
 
         #region Serialized Variables
 
-        [SerializeField] private AssetReferenceScriptableObject data;
-
-
+        [SerializeField] private AssetReferenceT<CD_InputData> data;
+        
         #endregion
 
         #region Private Variables
 
         private bool _isAvailableForInput;
-        private CD_InputData  _data;
+        private IMoveCommand moveLeftCommand;
+        private IMoveCommand moveRightCommand;
+        private IMoveCommand moveUpCommand;
+        private IMoveCommand moveDownCommand;
+        private InputData  _data;
 
 
         #endregion
 
         #endregion
 
-        private void Awake() => GetData();
-      
+        private void Awake()
+        {
+            GetData();
+            Init();
+        }
+
+        private void Init()
+        {
+            moveDownCommand = new MoveDownCommand();
+            moveLeftCommand = new MoveLeftCommand();
+            moveRightCommand = new MoveRightCommand();
+            moveUpCommand = new MoveUpCommand();
+        }
+
         #region Event Subscriptions
 
         private void OnEnable() => SubscribeEvents();
         
         private void SubscribeEvents()
         {
-            InputSignals.Instance.OnInputStateChanged += OnInputStateChanged;
+            CoreGameSignals.Instance.OnPlay += OnPlay;
+            CoreGameSignals.Instance.OnReset += OnReset;
+            
         }
 
-        private void OnInputStateChanged(bool state)
-        {
-            _isAvailableForInput = state;
-        }
+        private void OnReset() =>  _isAvailableForInput = false;
+        private void OnPlay() => _isAvailableForInput = true;
+        
 
-        private void OnDisable()
-        {
-            UnsubscribeEvents();
-            Addressables.Release(data);
-        }
-
+        private void OnDisable() =>  UnsubscribeEvents();
         private void UnsubscribeEvents()
         {
-            InputSignals.Instance.OnInputStateChanged -= OnInputStateChanged;
+            CoreGameSignals.Instance.OnPlay -= OnPlay;
+            CoreGameSignals.Instance.OnReset -= OnReset;
         }
 
         #endregion
 
         private void Update()
         {
-            //Todo : Refactoring with command pattern
             
-            if (_isAvailableForInput)
-            {
                 if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    Debug.Log("W" + _data.PlayerInputData);
+                    moveUpCommand.Execute();
                 }
                 else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
                 {
-                    Debug.Log("S");
+                    moveDownCommand.Execute();
                 }
                 else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
                 {
-                    Debug.Log("A");
+                    moveLeftCommand.Execute();
                 }
                 else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
                 {
-                    Debug.Log("D");
+                    moveRightCommand.Execute();
                 }
-            }
+                
+           
         }
 
 
         #region AssetReference
         private void GetData()
         {
-            var request = Addressables.LoadAssetAsync<ScriptableObject>(data);
+            var request = data.LoadAssetAsync();
             request.Completed += handle =>
             {
                 if (handle.Status == AsyncOperationStatus.Succeeded)
                 {
                     Debug.Log("<color=green>ScriptableObject loaded!</color>");
-                    _data = handle.Result as CD_InputData;
-
+                    _data = handle.Result.PlayerInputData;
                 }
-                else
-                {
-                    Debug.LogError("ScriptableObject not found!");
-                }
+                else Debug.LogError("ScriptableObject not found!");
+                    
+                
             };
-            
         }
 
+        private void OnDestroy() =>  Addressables.Release(data);
+       
         #endregion
         
     }
