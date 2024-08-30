@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Prototype.Scripts.Runtime.Controllers
 {
-   public class PlayerMovementController : MonoBehaviour
+   public class PlayerMovementControllerDemo : MonoBehaviour
    {
       [SerializeField] private LayerMask environmentLayerMask;
       [SerializeField] private LayerMask interactableLayerMask;

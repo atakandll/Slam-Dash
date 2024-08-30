@@ -12,7 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5636184b8f748049cb8efa802ae3079, type: 3}
   m_Name: CD_InputData
   m_EditorClassIdentifier: 
-  Data:
-    PlayerInputData:
-      x: 0
-      y: 0
+  PlayerInputData:
+    Direction: {x: 0, y: 0}

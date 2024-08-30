@@ -58,7 +58,7 @@ namespace Runtime.Managers
         private void UnsubscribeEvents()
         {
             LevelSignals.Instance.OnLevelInitialize -= _levelLoader.Execute;
-            LevelSignals.Instance.OnClearActiveLevel -= _levelDestroyer.Undo;
+            LevelSignals.Instance.OnClearActiveLevel -= _levelDestroyer.Execute;
         }
 
         private void Start()

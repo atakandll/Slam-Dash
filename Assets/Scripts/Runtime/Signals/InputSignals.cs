@@ -6,6 +6,5 @@ namespace Runtime.Signals
 {
     public class InputSignals : MonoSingleton<InputSignals>
     {
-        public UnityAction<bool> OnInputStateChanged = delegate { };
     }
 }

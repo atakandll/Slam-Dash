@@ -3,7 +3,7 @@
     public enum PlayerAnimationType
     {
         Idle,
-        Run,
-        Goal
+        HitWall,
+        ReachGoal
     }
 }
