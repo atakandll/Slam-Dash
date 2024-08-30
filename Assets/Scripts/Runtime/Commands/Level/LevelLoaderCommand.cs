@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace Runtime.Commands
+namespace Runtime.Commands.Level
 {
     public class LevelLoaderCommand
     {

@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using Runtime.Extensions;
+using UnityEngine;
+using UnityEngine.Events;
 
 namespace Runtime.Signals
 {
-    public class InputSignals : MonoBehaviour
+    public class InputSignals : MonoSingleton<InputSignals>
     {
-        
+        public UnityAction<bool> OnInputStateChanged = delegate { };
     }
 }

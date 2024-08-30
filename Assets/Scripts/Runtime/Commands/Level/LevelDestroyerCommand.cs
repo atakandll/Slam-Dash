@@ -1,7 +1,7 @@
 ﻿using Runtime.Managers;
 using UnityEngine;
 
-namespace Runtime.Commands
+namespace Runtime.Commands.Level
 {
     public class LevelDestroyerCommand 
     {
