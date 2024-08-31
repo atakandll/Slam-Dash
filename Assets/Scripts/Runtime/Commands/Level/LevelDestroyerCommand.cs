@@ -7,11 +7,11 @@ namespace Runtime.Commands.Level
     {
         private readonly LevelManager _levelManager;
 
-        public LevelDestroyerCommand(LevelManager levelManager)
+        internal LevelDestroyerCommand(LevelManager levelManager)
         {
             _levelManager = levelManager;
         }
-        public void Execute()
+        internal void Execute()
         {
             Object.Destroy(_levelManager.levelHolder.transform.GetChild(0).gameObject);
         }

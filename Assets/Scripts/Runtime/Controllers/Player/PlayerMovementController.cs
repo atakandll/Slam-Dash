@@ -26,6 +26,10 @@ namespace Runtime.Controllers.Player
                 {
                     //lose health
                     //particle
+                    // play animation hit wall
+                    // play sound
+                    // flashing
+                    //camera shake
                     Debug.Log(count);
                 }
                 

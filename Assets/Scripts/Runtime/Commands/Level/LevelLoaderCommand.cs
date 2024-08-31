@@ -10,12 +10,12 @@ namespace Runtime.Commands.Level
         private AsyncOperationHandle _request;
         private readonly LevelManager _levelManager;
 
-        public LevelLoaderCommand(LevelManager levelManager)
+        internal LevelLoaderCommand(LevelManager levelManager)
         {
             _levelManager = levelManager;
         }
         
-        public void Execute(byte levelIndex)
+        internal void Execute(byte levelIndex)
         {
             _request = Addressables.LoadAssetAsync<GameObject>($"Prefabs/LevelPrefabs/Level {levelIndex}");
             _request.Completed += handle =>
@@ -27,7 +27,7 @@ namespace Runtime.Commands.Level
 
         }
 
-        public void Undo()
+        internal void Undo()
         {
             Addressables.Release(_request);
         }

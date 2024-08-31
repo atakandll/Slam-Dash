@@ -1,5 +1,6 @@
 ﻿using System;
 using Runtime.Controllers.Player;
+using Runtime.Enums;
 using Runtime.Signals;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ namespace Runtime.Managers
         
         [SerializeField] private PlayerMovementController playerMovementController;
         [SerializeField] private PlayerPhysicController playerPhysicController;
+        [SerializeField] private PlayerAnimationController playerAnimationController;
+        [SerializeField] private PlayerFeelController playerFeelController;
 
         
 
@@ -23,7 +26,6 @@ namespace Runtime.Managers
         private bool _isAvailableForInput;
 
         #endregion
-
         
 
         #endregion
@@ -32,18 +34,36 @@ namespace Runtime.Managers
        
         private void SubscribeEvents()
         {
-            CoreGameSignals.Instance.OnPlay += () => PlayerSignals.Instance.onMoveConditionChanged?.Invoke(true);
-            CoreGameSignals.Instance.OnReset += () => PlayerSignals.Instance.onMoveConditionChanged?.Invoke(false);
-            LevelSignals.Instance.OnLevelFailed += () => PlayerSignals.Instance.onMoveConditionChanged?.Invoke(false);
-            LevelSignals.Instance.OnLevelSuccess += () => PlayerSignals.Instance.onMoveConditionChanged?.Invoke(true);
+            CoreGameSignals.Instance.OnPlay += OnPlay;
+            CoreGameSignals.Instance.OnReset += OnReset;
+            LevelSignals.Instance.OnLevelFailed += OnLevelFailed;
+            LevelSignals.Instance.OnLevelSuccess += OnLevelSuccess;
         }
-        private void OnPlay()
+
+       
+
+        private void OnLevelSuccess()
         {
-           
+            PlayerSignals.Instance.onMoveConditionChanged?.Invoke(true);
+
         }
+
+        private void OnLevelFailed()
+        {
+            PlayerSignals.Instance.onMoveConditionChanged?.Invoke(false);
+
+        }
+
         private void OnReset()
         {
-            
+            PlayerSignals.Instance.onMoveConditionChanged?.Invoke(false);
+
+        }
+
+        private void OnPlay()
+        {
+           PlayerSignals.Instance.onMoveConditionChanged?.Invoke(true);
+           PlayerSignals.Instance.onChangePlayerAnimationState?.Invoke(PlayerAnimationStates.Idle);
         }
 
         private void OnDisable() => UnsubscribeEvents();
@@ -52,11 +72,12 @@ namespace Runtime.Managers
         {
             CoreGameSignals.Instance.OnPlay -= OnPlay;
             CoreGameSignals.Instance.OnReset -= OnReset;
-            LevelSignals.Instance.OnLevelFailed -= () => PlayerSignals.Instance.onMoveConditionChanged?.Invoke(false);
-            LevelSignals.Instance.OnLevelSuccess -= () => PlayerSignals.Instance.onMoveConditionChanged?.Invoke(true);
+            LevelSignals.Instance.OnLevelFailed -= OnLevelFailed;
+            LevelSignals.Instance.OnLevelSuccess -= OnLevelSuccess;
         }
 
-
+        
+        
         internal bool CheckForWallForMovement(Vector3 worldPoint)
         {
             return playerPhysicController.CheckForWall(worldPoint);            

@@ -8,7 +8,7 @@ namespace Runtime.Signals
 {
     public class PlayerSignals : MonoSingleton<PlayerSignals>
     {
-        public UnityAction<PlayerAnimationType> onChangePlayerAnimation = delegate { };
+        public UnityAction<PlayerAnimationStates> onChangePlayerAnimationState = delegate { };
         public UnityAction<bool> onMoveConditionChanged = delegate { };
         public UnityAction<Vector2Int> onPlayerMove = delegate { };
         

@@ -1,6 +1,6 @@
 ﻿namespace Runtime.Enums
 {
-    public enum PlayerAnimationType
+    public enum PlayerAnimationStates
     {
         Idle,
         HitWall,

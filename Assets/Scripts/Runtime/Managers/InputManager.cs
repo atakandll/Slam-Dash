@@ -1,11 +1,6 @@
-﻿using System;
-using Runtime.Commands.Movement;
-using Runtime.Custom;
-using Runtime.Data.UnityObjects;
+﻿using Runtime.Data.UnityObjects;
 using Runtime.Data.ValueObjects;
-using Runtime.Interface;
 using Runtime.Signals;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -26,11 +21,9 @@ namespace Runtime.Managers
         #region Private Variables
 
         private bool _isAvailableForInput;
-        private IMoveCommand moveLeftCommand;
-        private IMoveCommand moveRightCommand;
-        private IMoveCommand moveUpCommand;
-        private IMoveCommand moveDownCommand;
+        
         private InputData  _data;
+        private Vector2Int? direction = null;
 
 
         #endregion
@@ -40,16 +33,9 @@ namespace Runtime.Managers
         private void Awake()
         {
             GetData();
-            Init();
         }
 
-        private void Init()
-        {
-            moveDownCommand = new MoveDownCommand();
-            moveLeftCommand = new MoveLeftCommand();
-            moveRightCommand = new MoveRightCommand();
-            moveUpCommand = new MoveUpCommand();
-        }
+      
 
         #region Event Subscriptions
 
@@ -77,25 +63,20 @@ namespace Runtime.Managers
 
         private void Update()
         {
-            
-                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-                {
-                    moveUpCommand.Execute();
-                }
-                else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-                {
-                    moveDownCommand.Execute();
-                }
-                else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
-                {
-                    moveLeftCommand.Execute();
-                }
-                else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-                {
-                    moveRightCommand.Execute();
-                }
-                
-           
+            //if (!_isAvailableForInput) return;
+            //if (!Input.anyKey) return;
+    
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+                direction = Vector2Int.up;
+            else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+                direction = Vector2Int.down;
+            else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+                direction = Vector2Int.left;
+            else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+                direction = Vector2Int.right;
+
+            if (direction.HasValue)
+                PlayerSignals.Instance.onPlayerMove?.Invoke(direction.Value);
         }
 
 
