@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Prototype.Scripts.Runtime.Managers
 {
-    public class UIManager : MonoBehaviour
+    public class UIManagerDemo : MonoBehaviour
     {
         [SerializeField] private GameObject losePanel;
         [SerializeField] private GameObject winPanel;

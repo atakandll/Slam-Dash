@@ -63,7 +63,7 @@ namespace Runtime.Managers
 
         private void Start()
         {
-            LevelSignals.Instance.OnLevelInitialize?.Invoke(GetLevelID());
+            //LevelSignals.Instance.OnLevelInitialize?.Invoke(GetLevelID());
         }
 
         private byte GetLevelID()
