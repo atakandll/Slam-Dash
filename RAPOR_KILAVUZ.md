@@ -85,7 +85,6 @@ Raporu kişiselleştirmek için:
 
 Sorularınız için:
 - GitHub Issues
-- atakandll@... (mail adresiniz varsa)
 
 ---
 
